@@ -80,12 +80,26 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/register", (req, res) => {
-  res.render("register", { error: null });
+app.get("/register", async (req, res) => {
+  try {
+    const usersCount = await User.countDocuments();
+    if (usersCount > 0) {
+      return res.redirect("/login");
+    }
+    res.render("register", { error: null });
+  } catch (err) {
+    console.error("Register page error:", err);
+    res.redirect("/login");
+  }
 });
 
 app.post("/register", async (req, res) => {
   try {
+    const usersCount = await User.countDocuments();
+    if (usersCount > 0) {
+      return res.redirect("/login"); 
+    }
+
     const { username, password } = req.body;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
@@ -156,7 +170,6 @@ app.post("/upload", cpUpload, async (req, res) => {
 
   if (!pdfFile) return res.status(400).send("PDF-файл обов'язковий.");
 
-  // Якщо обрано тільки один жанр, genres буде рядком, треба перетворити у масив
   if (!Array.isArray(genres)) {
     genres = [genres];
   }
@@ -307,5 +320,5 @@ app.post("/delete-account", authMiddleware, async (req, res) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
+  console.log(`Server running at ${PORT}`)
 );
