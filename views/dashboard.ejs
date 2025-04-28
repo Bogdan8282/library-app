@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Книгарня</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <h2 class="mb-4">Ласкаво просимо, <%= user.username %>!</h2>
+    <a class="btn mb-4" href="/logout">Вийти</a>
+    <form class="mb-6" action="/delete-account" method="POST"
+        onsubmit="return confirm('Ви впевнені, що хочете видалити акаунт? Цю дію неможливо скасувати.')">
+        <button class="btn" type="submit">
+            Видалити акаунт
+        </button>
+    </form>
+
+
+    <h1 class="mb-6">Завантаження книги</h1>
+    <form class="flex flex-col w-fit gap-4 mb-6" action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="flex flex-col gap-2">
+            <label>Ім'я файлу:</label>
+            <input type="text" name="filename" required>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <label>Опис (не обов'язково):</label>
+            <textarea name="description"></textarea>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <label>Автор:</label>
+            <input type="text" name="author" required>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <label>Жанри:</label>
+            <select class="min-h-28" name="genres" multiple required>
+                <% genres.forEach(genre=> { %>
+                    <option value="<%= genre._id %>">
+                        <%= genre.name %>
+                    </option>
+                    <% }); %>
+            </select>
+            <p class="text-sm text-gray-500">Утримуйте Ctrl (або Command на Mac), щоб вибрати кілька жанрів</p>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <label>PDF-файл:</label>
+            <input type="file" name="pdf" accept="application/pdf" required>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <label>Обкладинка (зображення):</label>
+            <input type="file" name="cover" accept="image/*">
+        </div>
+
+        <button type="submit">Завантажити</button>
+    </form>
+
+    <hr class="mb-6">
+
+    <h2 class="mb-6">Список завантажених файлів:</h2>
+    <ul class="flex flex-col gap-4">
+        <% files.forEach(file=> { %>
+            <li>
+                <a class="font-semibold" href="<%= file.filepath %>" target="_blank">
+                    <%= file.filename %>
+                </a> (додано <%= file.uploadedAt.toLocaleString() %>)
+
+                    <form action="/delete/<%= file._id %>" method="POST" style="display:inline;">
+                        <button class="p-[6px]!" type="submit">🗑️ Видалити</button>
+                    </form>
+
+                    <a class="btn p-[6px]!" href="/edit/<%= file._id %>">✏️ Редагувати</a>
+            </li>
+            <% }); %>
+    </ul>
+
+</body>
+
+</html>

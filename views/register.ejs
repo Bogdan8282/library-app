@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Книгарня</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/output.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <h2 class="mb-6">Реєстрація</h2>
+    <% if (error) { %>
+        <p class="mb-4" style="color:red;">
+            <%= error %>
+        </p>
+        <% } %>
+            <form class="flex flex-col w-fit gap-2 mb-4" action="/register" method="post">
+                <input name="username" placeholder="Нікнейм" required><br>
+                <input name="password" type="password" placeholder="Пароль" required><br>
+                <button type="submit">Зареєструватись</button>
+            </form>
+            <p>Вже маєте акаунт? <a class="link" href="/login">Увійти</a></p>
+</body>
+
+</html>
