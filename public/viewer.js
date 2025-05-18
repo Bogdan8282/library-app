@@ -7,10 +7,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const goToPageBtn = document.getElementById("go-to-page-btn");
   const zoomOutBtn = document.getElementById("zoom-out");
   const zoomInBtn = document.getElementById("zoom-in");
+  const bookmarkBtn = document.getElementById("bookmark-btn");
+  const removeBookmarkBtn = document.getElementById("remove-bookmark-btn");
 
   let pdfDoc = null;
   let pageNum = 1;
   let scale = 1.0;
+
+  const pdfFile = window.pdfFilePath;
+  const bookmarkKey = `bookmark_${pdfFile}`;
+
+  function updatePageDisplay() {
+    pageNumSpan.textContent = `Сторінка ${pageNum} з ${pdfDoc.numPages}`;
+  }
 
   async function renderPage(num) {
     const page = await pdfDoc.getPage(num);
@@ -26,20 +35,41 @@ document.addEventListener("DOMContentLoaded", function () {
       viewport,
     };
     await page.render(renderContext);
+    updatePageDisplay();
+    updateBookmarkButtons();
   }
 
   async function loadPDF(url) {
     const loadingTask = pdfjsLib.getDocument(url);
     pdfDoc = await loadingTask.promise;
+
+    const savedBookmark = parseInt(localStorage.getItem(bookmarkKey));
+    if (
+      savedBookmark &&
+      savedBookmark >= 1 &&
+      savedBookmark <= pdfDoc.numPages
+    ) {
+      pageNum = savedBookmark;
+    }
+
     renderPage(pageNum);
-    pageNumSpan.textContent = `Сторінка ${pageNum} з ${pdfDoc.numPages}`;
+  }
+
+  function updateBookmarkButtons() {
+    const currentBookmark = parseInt(localStorage.getItem(bookmarkKey));
+    if (currentBookmark === pageNum) {
+      bookmarkBtn.style.display = "none";
+      removeBookmarkBtn.style.display = "inline-block";
+    } else {
+      bookmarkBtn.style.display = "inline-block";
+      removeBookmarkBtn.style.display = "none";
+    }
   }
 
   prevPageBtn.addEventListener("click", () => {
     if (pageNum > 1) {
       pageNum--;
       renderPage(pageNum);
-      pageNumSpan.textContent = `Сторінка ${pageNum} з ${pdfDoc.numPages}`;
     }
   });
 
@@ -47,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (pageNum < pdfDoc.numPages) {
       pageNum++;
       renderPage(pageNum);
-      pageNumSpan.textContent = `Сторінка ${pageNum} з ${pdfDoc.numPages}`;
     }
   });
 
@@ -56,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (targetPage >= 1 && targetPage <= pdfDoc.numPages) {
       pageNum = targetPage;
       renderPage(pageNum);
-      pageNumSpan.textContent = `Сторінка ${pageNum} з ${pdfDoc.numPages}`;
     }
   });
 
@@ -74,8 +102,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const pdfFile = window.pdfFilePath;
+  bookmarkBtn.addEventListener("click", () => {
+    localStorage.setItem(bookmarkKey, pageNum);
+    updateBookmarkButtons();
+  });
+
+  removeBookmarkBtn.addEventListener("click", () => {
+    localStorage.removeItem(bookmarkKey);
+    updateBookmarkButtons();
+  });
 
   if (pdfFile) {
     loadPDF(pdfFile);

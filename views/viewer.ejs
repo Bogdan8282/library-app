@@ -24,7 +24,14 @@
 </head>
 
 <body>
-    <div class="book-info mb-6">
+    <header class="flex justify-between items-center mb-12 w-full">
+        <div class="logo flex gap-2 items-center">
+            <img class="logo-pic" src="/logo.svg" alt="">
+            <h1 class="logo-title font-medium">Книгарня</h1>
+        </div>
+        <a href="/" class="btn flex gap-2 items-center"><span>На головну</span><img src="/house.svg" alt="house"></a>
+    </header>
+    <div class="book-info mb-4 max-w-[800px]">
         <h2 class="mb-4">
             <%= file.filename %>
         </h2>
@@ -42,22 +49,26 @@
                         Невідомо
                         <% } %>
         </p>
-        <div class="back-button">
-            <a href="/" class="btn">Назад до списку книг</a>
+    </div>
+    <div class="flex justify-between w-full max-w-[800px] mb-2">
+        <div class=""><button id="zoom-out" class="small-btn"><img src="/minus.svg" alt="minus"></button>
+            <button id="zoom-in" class="small-btn"><img src="/plus.svg" alt="plus"></button>
+        </div>
+        <div class="">
+            <button id="bookmark-btn"><img src="/bookmark-unchecked.svg" alt="bookmark-unchecked"></button>
+            <button id="remove-bookmark-btn" style="display: none;"><img src="/bookmark-checked.svg"
+                    alt="bookmark-checked"></button>
         </div>
     </div>
-    <div id="pdf-container" class="mb-4"></div>
-    <div id="page-controls" class="mb-4">
-        <button id="prev-page">Минула</button>
+    <div id="pdf-container" class="mb-2"></div>
+    <div id="page-controls" class="flex items-center gap-2 mb-4">
+        <button id="prev-page"><img src="/arrow-left.svg" alt="arrow-left"></button>
         <span id="page-num">Сторінка 1</span>
-        <button id="next-page">Наступна</button>
+        <button id="next-page"><img src="/arrow-right.svg" alt="arrow-right"></button>
         <input type="number" id="go-to-page-input" placeholder="Перейти на сторінку">
         <button id="go-to-page-btn">Перейти</button>
     </div>
-    <div class="mb-4">
-        <button id="zoom-out">Віддалити</button>
-        <button id="zoom-in">Наблизити</button>
-    </div>
+
 </body>
 
 </html>
