@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Книгарня</title>
+    <link rel="stylesheet" href="/output.css">
+    <link rel="stylesheet" href="/viewer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap"
+        rel="stylesheet">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script defer>
+        window.pdfFilePath = "<%= file.filepath %>";
+    </script>
+    <script defer src="/viewer.js"></script>
+</head>
+
+<body>
+    <header class="flex justify-between items-center py-8 px-10 mb-12 w-full">
+        <div class="logo flex gap-2 items-center">
+            <img class="logo-pic" src="/logo.svg" alt="">
+            <h1 class="logo-title font-medium">Книгарня</h1>
+        </div>
+        <a href="/" class="btn flex gap-2 items-center"><span>На головну</span><img src="/house.svg" alt="house"></a>
+    </header>
+    <main class="wrapper w-full flex flex-col items-center">
+        <div class="book-info mb-4 w-full max-w-[800px] flex flex-col items-start">
+            <h2 class="mb-4">
+                <%= file.filename %>
+            </h2>
+            <p class="mb-4">
+                <%= file.description %>
+            </p>
+            <p class="mb-4">
+                Автор: <%= file.author %>
+            </p>
+            <p class="mb-4">
+                Жанри:
+                <% if (file.genres && file.genres.length> 0) { %>
+                    <%= file.genres.map(g=> g.name).join(", ") %>
+                        <% } else { %>
+                            Невідомо
+                            <% } %>
+            </p>
+        </div>
+        <div class="flex justify-between w-full max-w-[800px] mb-2">
+            <div class=""><button id="zoom-out" class="small-btn"><img src="/minus.svg" alt="minus"></button>
+                <button id="zoom-in" class="small-btn"><img src="/plus.svg" alt="plus"></button>
+            </div>
+            <div class="">
+                <button id="bookmark-btn"><img src="/bookmark-unchecked.svg" alt="bookmark-unchecked"></button>
+                <button id="remove-bookmark-btn" style="display: none;"><img src="/bookmark-checked.svg"
+                        alt="bookmark-checked"></button>
+            </div>
+        </div>
+        <div id="pdf-container" class="mb-2"></div>
+        <div id="page-controls" class="flex items-center gap-2">
+            <button id="prev-page"><img src="/arrow-left.svg" alt="arrow-left"></button>
+            <span id="page-num">Сторінка 1</span>
+            <button id="next-page"><img src="/arrow-right.svg" alt="arrow-right"></button>
+            <input type="number" id="go-to-page-input" placeholder="Перейти на сторінку">
+            <button id="go-to-page-btn">Перейти</button>
+        </div>
+    </main>
+    <footer class="flex w-full items-center mt-12 py-8 px-10 bg-gray-300 text-base">
+        Всі права захищено © 2025 - Книгарня
+    </footer>
+</body>
+
+</html>

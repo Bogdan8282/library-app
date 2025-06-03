@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Книгарня</title>
+    <link rel="stylesheet" href="/output.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap"
+        rel="stylesheet">
+    <script defer src="/books-list.js"></script>
+</head>
+
+<body>
+    <header class="flex justify-between items-center py-8 px-10 mb-12">
+        <div class="logo flex gap-2 items-center">
+            <img class="logo-pic" src="/logo.svg" alt="">
+            <h1 class="logo-title font-medium">Книгарня</h1>
+        </div>
+        <input class="w-66" type="text" id="search-input" placeholder="Пошук книги...">
+    </header>
+    <div id="book-list" class="wrapper min-h-[80vh]">
+        Завантаження...
+    </div>
+    <footer class="flex w-full items-center py-8 px-10 bg-gray-300 text-base">
+        Всі права захищено © 2025 - Книгарня
+    </footer>
+</body>
+
+</html>

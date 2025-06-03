@@ -1,0 +1,51 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#pdf-container {
+  border: 1px solid #ccc;
+  overflow: auto;
+  width: 100%;
+  max-width: 800px;
+  height: 80vh;
+  text-align: center;
+}
+
+#pdf-container canvas {
+  margin: 0 auto;
+}
+
+.button-group,
+#zoom-controls,
+#file-controls {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.button-groupbutton,
+#zoom-controlsbutton,
+#file-controlsbutton,
+#file-controlsinput[type="file"] {
+  margin: 05px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.button-groupbutton:hover,
+#zoom-controlsbutton:hover,
+#file-controlsbutton:hover,
+#file-controlsinput[type="file"]:hover {
+  background-color: #0056b3;
+}
