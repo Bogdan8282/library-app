@@ -19,77 +19,80 @@
 </head>
 
 <body>
-    <h2 class="mb-4">Ласкаво просимо, <%= user.username %>!</h2>
-    <a class="btn mb-4" href="/logout">Вийти</a>
-    <form class="mb-6" action="/delete-account" method="POST"
-        onsubmit="return confirm('Ви впевнені, що хочете видалити акаунт? Цю дію неможливо скасувати.')">
-        <button class="btn" type="submit">
-            Видалити акаунт
-        </button>
-    </form>
-
-
-    <h1 class="mb-6">Завантаження книги</h1>
-    <form class="flex flex-col w-fit gap-4 mb-6" action="/upload" method="POST" enctype="multipart/form-data">
-        <div class="flex flex-col gap-2">
-            <label>Ім'я файлу:</label>
-            <input type="text" name="filename" required>
+    <main class="wrapper my-12">
+        <div class="flex flex-col gap-6 mb-8">
+            <h2>Ласкаво просимо, <%= user.username %>!</h2>
+            <a class="btn self-start" href="/logout">Вийти</a>
+            <form action="/delete-account" method="POST"
+                onsubmit="return confirm('Ви впевнені, що хочете видалити акаунт? Цю дію неможливо скасувати.')">
+                <button class="btn" type="submit">
+                    Видалити акаунт
+                </button>
+            </form>
         </div>
 
-        <div class="flex flex-col gap-2">
-            <label>Опис (не обов'язково):</label>
-            <textarea name="description"></textarea>
-        </div>
 
-        <div class="flex flex-col gap-2">
-            <label>Автор:</label>
-            <input type="text" name="author" required>
-        </div>
+        <h1 class="mb-6">Завантаження книги</h1>
+        <form class="flex flex-col w-fit gap-4 mb-6" action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="flex flex-col gap-2">
+                <label>Назва:</label>
+                <input type="text" name="filename" required>
+            </div>
 
-        <div class="flex flex-col gap-2">
-            <label>Жанри:</label>
-            <select class="min-h-28" name="genres" multiple required>
-                <% genres.forEach(genre=> { %>
-                    <option value="<%= genre._id %>">
-                        <%= genre.name %>
-                    </option>
-                    <% }); %>
-            </select>
-            <p class="text-sm text-gray-500">Утримуйте Ctrl (або Command на Mac), щоб вибрати кілька жанрів</p>
-        </div>
+            <div class="flex flex-col gap-2">
+                <label>Опис:</label>
+                <textarea name="description" rows="2"></textarea>
+            </div>
 
-        <div class="flex flex-col gap-2">
-            <label>PDF-файл:</label>
-            <input type="file" name="pdf" accept="application/pdf" required>
-        </div>
+            <div class="flex flex-col gap-2">
+                <label>Автор:</label>
+                <input type="text" name="author" required>
+            </div>
 
-        <div class="flex flex-col gap-2">
-            <label>Обкладинка (зображення):</label>
-            <input type="file" name="cover" accept="image/*">
-        </div>
+            <div class="flex flex-col gap-2">
+                <label>Жанри:</label>
+                <select class="min-h-28" name="genres" multiple required>
+                    <% genres.forEach(genre=> { %>
+                        <option value="<%= genre._id %>">
+                            <%= genre.name %>
+                        </option>
+                        <% }); %>
+                </select>
+                <p class="text-sm text-gray-500">Утримуйте Ctrl (або Command на Mac), щоб вибрати кілька жанрів</p>
+            </div>
 
-        <button type="submit">Завантажити</button>
-    </form>
+            <div class="flex flex-col gap-2">
+                <label>PDF-файл:</label>
+                <input type="file" name="pdf" accept="application/pdf" required>
+            </div>
 
-    <hr class="mb-6">
+            <div class="flex flex-col gap-2">
+                <label>Обкладинка (зображення):</label>
+                <input type="file" name="cover" accept="image/*">
+            </div>
 
-    <h2 class="mb-6">Список завантажених файлів:</h2>
-    <ul class="flex flex-col gap-4">
-        <% files.forEach(file=> { %>
-            <li>
-                <a class="font-semibold" href="<%= file.filepath %>" target="_blank">
-                    <%= file.filename %>
-                </a> (додано <%= file.uploadedAt.toLocaleString() %>)
+            <button type="submit">Завантажити</button>
+        </form>
 
-                    <form action="/delete/<%= file._id %>" method="POST" style="display:inline;">
-                        <button class="p-[6px]!" type="submit">🗑️ Видалити</button>
-                    </form>
+        <hr class="mb-6">
 
-                    <a class="btn p-[6px]!" href="/edit/<%= file._id %>">✏️ Редагувати</a>
-            </li>
-            <% }); %>
-    </ul>
+        <h2 class="mb-6">Список завантажених файлів:</h2>
+        <ul class="flex flex-col gap-4">
+            <% files.forEach(file=> { %>
+                <li>
+                    <a class="font-semibold" href="<%= file.filepath %>" target="_blank">
+                        <%= file.filename %>
+                    </a> (додано <%= file.uploadedAt.toLocaleString() %>)
 
+                        <form action="/delete/<%= file._id %>" method="POST" style="display:inline;">
+                            <button class="p-[6px]!" type="submit">🗑️ Видалити</button>
+                        </form>
+
+                        <a class="btn p-[6px]!" href="/edit/<%= file._id %>">✏️ Редагувати</a>
+                </li>
+                <% }); %>
+        </ul>
+    </main>
 </body>
 
 </html>

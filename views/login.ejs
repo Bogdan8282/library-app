@@ -19,18 +19,20 @@
 </head>
 
 <body>
-    <h2 class="mb-6">Вхід</h2>
-    <% if (error) { %>
-        <p class="mb-4" style="color:red;">
-            <%= error %>
-        </p>
-        <% } %>
-            <form class="flex flex-col w-fit gap-2 mb-4" action="/login" method="post">
-                <input name="username" placeholder="Нікнейм" required><br>
-                <input name="password" type="password" placeholder="Пароль" required><br>
-                <button type="submit">Увійти</button>
-            </form>
-            <p>Немає акаунту? <a class="link" href="/register">Зареєструватись</a></p>
+    <main class="wrapper my-12">
+        <h2 class="mb-6">Вхід</h2>
+        <% if (error) { %>
+            <p class="mb-4" style="color:red;">
+                <%= error %>
+            </p>
+            <% } %>
+                <form class="flex flex-col w-fit gap-2 mb-4" action="/login" method="post">
+                    <input name="username" placeholder="Нікнейм" required><br>
+                    <input name="password" type="password" placeholder="Пароль" required><br>
+                    <button type="submit">Увійти</button>
+                </form>
+                <p>Немає акаунту? <a class="link" href="/register">Зареєструватись</a></p>
+    </main>
 </body>
 
 </html>
